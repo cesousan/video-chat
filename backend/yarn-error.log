@@ -1,0 +1,40 @@
+Arguments: 
+  /home/cesousan/.nvm/versions/node/v10.4.1/bin/node /usr/share/yarn/bin/yarn.js add express mongoose passport passport-google-oauth20
+
+PATH: 
+  /home/cesousan/.nvm/versions/node/v10.4.1/bin:/home/cesousan/bin:/home/cesousan/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+
+Yarn version: 
+  1.7.0
+
+Node version: 
+  10.4.1
+
+Platform: 
+  linux x64
+
+Trace: 
+  SyntaxError: /home/cesousan/Documents/dev/projects/video_chat/package.json: Unexpected token } in JSON at position 130
+      at JSON.parse (<anonymous>)
+      at /usr/share/yarn/lib/cli.js:1130:59
+      at Generator.next (<anonymous>)
+      at step (/usr/share/yarn/lib/cli.js:98:30)
+      at /usr/share/yarn/lib/cli.js:109:13
+
+npm manifest: 
+  {
+    "name": "server",
+    "version": "1.0.0",
+    "main": "index.js",
+    "engines": {
+      "node": "10.4.1",
+      "npm": "6.1.0"
+    },
+    
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
