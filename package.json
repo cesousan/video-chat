@@ -1,0 +1,15 @@
+{
+  "name": "video_chat",
+  "version": "1.0.0",
+  "description": "a simple video chat app just for fun",
+  "main": "index.js",
+  "repository": "https://gitlab.com/cesousan/video-chat.git",
+  "author": "cesousan & juanito",
+  "license": "MIT",
+  "scripts": {
+    "dev": "concurrently \"cd ./backend && yarn run server\" \"cd ./ng-frontend && yarn run start\""
+  },
+  "devDependencies": {
+    "concurrently": "^3.5.1"
+  }
+}

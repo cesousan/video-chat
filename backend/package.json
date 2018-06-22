@@ -8,9 +8,7 @@
   },
   "scripts": {
     "start": "node index.js",
-    "server": "nodemon index.js",
-    "client": "npm run start --prefix client",
-    "dev": "concurrently \"yarn run server\" \"yarn run client\""
+    "server": "nodemon index.js"
   },
   "author": "cesousan & juanito",
   "license": "MIT",
@@ -24,7 +22,6 @@
     "passport-jwt": "^4.0.0"
   },
   "devDependencies": {
-    "concurrently": "^3.5.1",
     "nodemon": "^1.17.5"
   }
 }
