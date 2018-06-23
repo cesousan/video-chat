@@ -1,0 +1,13 @@
+version: '3'
+services:
+  angular:
+    build: ./ng-frontend
+    image: local/video-chat-frontend:prod
+    restart: always
+    ports:
+      - 80:80
+  express:
+    build: ./backend
+    restart: always
+    ports:
+      - 5000:8080
