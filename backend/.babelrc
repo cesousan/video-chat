@@ -1,5 +1,9 @@
 {
-  "presets" : [
-    "env"
+  "presets": [
+    [ "env", {
+      "targets": {
+        "node": "10.4"
+      }
+    }]
   ]
 }
