@@ -68,11 +68,12 @@ if (keys.facebookClientID) {
 passport.use(
   new passportJwt.Strategy({
     jwtFromRequest: passportJwt.ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: keys.tokenSecret
+    secretOrKey: keys.tokenSecret,
+    // more options : issuer, audience, etc.
   },
   async (payload, done) => {
-    console.log(payload);
-    const user = await User.findById(payload.userId);
+    console.log(payload.sub)
+    const user = await User.findById(payload.sub);
     return user ? done(null, user, payload) : done();
   })
 );
@@ -100,7 +101,6 @@ const _getByEmail = (profile) => {
   * @return the first matching element or null.
   */
   const checkMailExist = async (emails) => {
-    console.log('checking mails for adresses : ', emails);
     let emailPromises = [];
     emails.forEach(email => {
       const user = User.findOne({ email });

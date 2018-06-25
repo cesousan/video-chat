@@ -8,5 +8,6 @@ module.exports = {
   facebookClientID: '186305602070094',
   facebookClientSecret: '735b92376ea1b920677ad9718e7ce07b',
   tokenSecret: 'mySuperSecretTokenKey',
-  mongoURI: `mongodb://${dbUser}:${dbPwd}@ds263640.mlab.com:63640/video_chat-dev`
+  mongoURI: `mongodb://${dbUser}:${dbPwd}@ds263640.mlab.com:63640/video_chat-dev`,
+  redisUrl: 'redis://127.0.0.1:6379',
 }

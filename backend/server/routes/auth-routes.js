@@ -3,11 +3,10 @@ const token = require('../services/token');
 
 const generateUserToken = (req, res) => {
   const accessToken = token.generateAccessToken(req.user.id);
-  res.send({ token: accessToken });
+  res.send({ access_token: accessToken });
 }
 
-module.exports = (app) => {
-
+module.exports = app => {
 
   // GOOGLE AUTH ROUTES
   // get the google-OAuth2 flow kicked.
@@ -37,21 +36,5 @@ module.exports = (app) => {
       generateUserToken
     );
   // ********************
-
-  app.get('/api/secure',
-    passport.authenticate(['jwt'], { session: false }),
-    (req, res) => {
-      console.log(req);
-      res.send('Secure response from ' + JSON.stringify(req.user));
-    });
-
-  // // LOGOUT ROUTE
-  // app.get('/api/logout', (req, res) => {
-  //   req.logout();
-  //   res.send(req.user);
-  // });
-  //
-  // // CONNECTED USER ? NO WAY BECAUSE STATELESS...
-  // app.get('/api/current_user', (req, res) => res.send(req.user));
 
 };
