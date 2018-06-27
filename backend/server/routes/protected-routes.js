@@ -1,6 +1,7 @@
 const requireLogin = require('../middleware/requireLogin');
 const usersRouter = require('./api/users');
-module.exports = app => {
+
+module.exports = (app) => {
 
   app.get('/api',
     (req, res) => {
@@ -11,8 +12,8 @@ module.exports = app => {
       `);
     });
 
-  app.use('/api/*',
-    requireLogin);
+
+  app.use('/api/*', requireLogin);
 
   app.use('/api/users', usersRouter);
 

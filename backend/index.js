@@ -1,28 +1,24 @@
-const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const passport = require('passport');
-const token = require('./server/services/token');
-const keys = require('./server/config/keys');
-
 // mongoose models.
 require('./server/models/User');
+
+const token = require('./server/services/token');
+const keys = require('./server/config/keys');
 
 // custom services.
 require('./server/services/passport');
 require('./server/services/cache');
 
+// mongoose make use of global promises.
 mongoose.Promise = global.Promise;
+// connection to db
 mongoose.connect(keys.mongoURI);
 
-const app = express();
+// creates http server.
+const app = require('./server/http-server');
 
-app.use(bodyParser.json());
+// creates the websocket server.
+const server = require('./server/socket-server')(app);
 
-app.use(passport.initialize());
-
-require('./server/routes/auth-routes')(app);
-require('./server/routes/protected-routes')(app);
-
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`listening on port ${PORT}`));
+const PORT = process.env.PORT || 5000;
+server.listen(PORT, () => console.log(`listening on port ${PORT}`));

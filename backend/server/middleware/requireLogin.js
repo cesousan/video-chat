@@ -5,7 +5,6 @@ module.exports = (req, res, next) => {
     ['jwt'],
     { session: false },
     (err, user, info) => {
-      console.log(err, user, info);
       if (err) {
         console.log(err);
         return next(err);

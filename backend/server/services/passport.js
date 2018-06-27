@@ -72,15 +72,16 @@ passport.use(
     // more options : issuer, audience, etc.
   },
   async (payload, done) => {
-    console.log(payload.sub)
     const user = await User.findById(payload.sub);
     return user ? done(null, user, payload) : done();
   })
 );
 
-/** finds a user by its social id (facebook, google, etc.);
+/**
+* @summary finds a user by its social id (facebook, google, etc.);
 * performs multiple concurrent checks into database
-* @return the first matching user profile, or null.
+* @param { object } profile the social profile returned by the social strategy used.
+* @return { User } the first matching user profile, or null.
 */
 const _getBySocialID = async (profile) => {
   const existingFacebookUser = User.findOne({ facebookId: profile.id });
@@ -92,12 +93,16 @@ const _getBySocialID = async (profile) => {
   return users ? users.filter(a => a !== null)[0] : null;
 }
 
-/** checks if a database entry exists for a given profile list of email.
-* @return the first matching user profile, or null.
+/**
+* @summary checks if a database entry exists for a given profile list of email.
+* @param { object } profile the social profile returned by the social strategy used.
+* @return { User } the first matching user profile, or null.
 */
 const _getByEmail = (profile) => {
-  /** inner async function to perform multiple concurrent checks
+  /**
+  * inner async function to perform multiple concurrent checks
   * on emails in the database.
+  * @param { Array<String> } emails the list of mails contained in the social profile.
   * @return the first matching element or null.
   */
   const checkMailExist = async (emails) => {
@@ -113,7 +118,15 @@ const _getByEmail = (profile) => {
   ? checkMailExist(profile.emails.map(mail => mail.value))
   : null;
 }
-
+/**
+* @summary a function to create a new user from the infos contained inside
+* his social profile when first authenticating.
+* @function
+* @param { object } profile the social profile returned by the social strategy used.
+* @param { string } socialID the socialID of the profile, to manage multiple accounts with
+* same user (ex : facebook + google authentication sharing same emails).
+* @return { User } the user saved.
+*/
 const _createUser = (profile, socialID = '') => {
   let user = new User({ name : profile.displayName });
   if (socialID) {

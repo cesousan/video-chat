@@ -18,7 +18,6 @@ mongoose.Query.prototype.cache = function(options = {}) {
 // redefining exec to handle new cache.
 mongoose.Query.prototype.exec = async function() {
   if (!this.useCache) {
-    console.log('not using cache.')
     return exec.apply(this, arguments);
   }
 
@@ -33,7 +32,6 @@ mongoose.Query.prototype.exec = async function() {
 
   // If we do, return that
   if (cacheValue) {
-    console.log('serving from cache!')
     const doc = JSON.parse(cacheValue);
 
     return Array.isArray(doc)
