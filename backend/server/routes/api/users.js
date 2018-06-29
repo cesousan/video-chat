@@ -1,6 +1,9 @@
 const users = require('express').Router();
 const mongoose = require('mongoose');
 const User = mongoose.model('users');
+const { verifyAccessToken } = require('../../services/token');
+
+
 
 /**
 * @summary find all users in database.
@@ -8,6 +11,18 @@ const User = mongoose.model('users');
 */
 users.get('/', async (req, res, next) => {
   res.send(await User.find());
+});
+
+users.get('/info', async (req, res, next) => {
+  const token = req.headers.authorization;
+  if(token) {
+    const verified = await verifyAccessToken(token);
+    verified
+      ? res.status(200).send({status: 'data', user: verified})
+      : res.status(401).send({status: 'error', message: 'Authentication failed'});
+  } else {
+    res.status(401).send({status: 'error', message: 'Token is mendatory'});
+  }
 });
 
 /**

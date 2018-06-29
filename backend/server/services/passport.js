@@ -73,6 +73,7 @@ passport.use(
   },
   async (payload, done) => {
     const user = await User.findById(payload.sub);
+    // console.log(user);
     return user ? done(null, user, payload) : done();
   })
 );

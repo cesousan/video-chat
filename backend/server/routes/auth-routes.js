@@ -1,8 +1,8 @@
 const passport = require('passport');
-const token = require('../services/token');
+const { generateAccessToken } = require('../services/token');
 
 const generateUserToken = (req, res) => {
-  const accessToken = token.generateAccessToken(req.user.id);
+  const accessToken = generateAccessToken(req.user.id);
   res.send({ access_token: accessToken });
 }
 

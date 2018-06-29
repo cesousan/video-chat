@@ -12,28 +12,28 @@ const generateAccessToken = (userID, expiresIn = 3600) => {
   return token;
 };
 
-const verifyAccessToken = (bearerToken, done) => {
+const verifyAccessToken = (bearerToken) => {
   // split token and get encoded part
-  if(!bearerToken) return done(false);
+
+  // console.log(bearerToken, done);
+
+  if(!bearerToken) return false;
   const token = bearerToken.startsWith('bearer ')
     ? bearerToken.split(' ')[1]
     : null;
-  if (!token) return done(false, 401, 'Invalid token');
+  if (!token) return false;
 
-  jwt.verify(token, keys.tokenSecret, async (err, decoded) => {
+  return jwt.verify(token, keys.tokenSecret, async (err, decoded) => {
     if (err) {
-      return done(false, 401, 'Unauthorized');
+      return false;
     } else {
       const user = await User.findById(decoded.sub).cache({
         id: decoded.sub
       });
-      console.log('************')
-      console.log(user);
-      return done(user ? true : false);
+      console.log(`about to return ${user}`);
+      return user ? user : false;
     }
-
-  })
-
+  });
 }
 
 module.exports = {
