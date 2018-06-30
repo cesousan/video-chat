@@ -5,16 +5,14 @@ const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const logger = require('morgan');
-
 // use dotenv
-dotenv.config({
-  silent: true,
-});
+dotenv.config();
 
 // mongoose models.
 require('./server/models/User');
 
 const token = require('./server/services/token');
+const cors = require('./server/middleware/cors');
 const keys = require('./server/config/keys');
 
 // custom services.
@@ -29,22 +27,20 @@ mongoose.connect(keys.mongoURI);
 // creates express app.
 const app = express();
 
-// view engine
-app.set('views', (path.join(__dirname, '/server/views')));
-app.set('view engine', 'pug');
+// middlewares
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(logger('combined'));
+app.use(passport.initialize());
+app.use(cors);
+
 
 // create http server.
 require('./server/http-server')(app);
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-
-app.use(logger('combined'));
-
-app.use(passport.initialize());
-
 // get ports from env and store it in Express.
-const PORT = normalizePort(process.env.PORT || 5000);
+const PORT = normalizePort(process.env.PORT || 4000);
+console.log(dotenv.config());
 app.set('port', PORT);
 
 // creates the websocket server.
@@ -54,7 +50,6 @@ let availablePort = PORT;
 // *** START SERVER ***
 server.on('error', onError);
 server.on('listening', onListening);
-
 startServer(server, availablePort);
 // ********************
 
