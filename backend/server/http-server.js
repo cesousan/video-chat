@@ -1,8 +1,5 @@
 module.exports = app => {
 
-  // routes to views
-  require('./routes/views-routes')(app);
-
   // routes to Authentication
   require('./routes/auth-routes')(app);
 
