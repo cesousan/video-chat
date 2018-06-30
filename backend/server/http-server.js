@@ -1,15 +1,24 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const passport = require('passport');
+module.exports = app => {
 
-const app = express();
+  // routes to views
+  require('./routes/views-routes')(app);
 
-app.use(bodyParser.json());
+  // routes to Authentication
+  require('./routes/auth-routes')(app);
 
-app.use(passport.initialize());
+  // routes to protected API.
+  require('./routes/protected-routes')(app);
 
-require('./routes/auth-routes')(app);
+  // catch 404 and forward to error handler
+  app.use((req, res, next) => {
+    const err = new Error('Not Found');
+    err.status = 404;
+    next(err);
+  });
 
-require('./routes/protected-routes')(app);
-
-module.exports = app;
+  // error handlers
+  app.use((err, req, res, next) => {
+    res.status(err.status || 500);
+    next();
+  });
+}
