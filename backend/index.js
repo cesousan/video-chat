@@ -13,6 +13,7 @@ require('./server/models/User');
 
 const token = require('./server/services/token');
 const cors = require('./server/middleware/cors');
+const ensureSecure = require('./server/middleware/ensureSecure');
 const keys = require('./server/config/keys');
 
 // custom services.
@@ -34,22 +35,36 @@ app.use(logger('combined'));
 app.use(passport.initialize());
 app.use(cors);
 
-
-// create http server.
-require('./server/http-server')(app);
+// redirecting calls from HTTP to HTTPS
+app.use(ensureSecure);
 
 // get ports from env and store it in Express.
-const PORT = normalizePort(process.env.PORT || 4000);
-console.log(dotenv.config());
+const PORT = normalizePort(process.env.PORT || 9000);
 app.set('port', PORT);
 
-// creates the websocket server.
-const server = require('./server/socket-server')(app);
-let availablePort = PORT;
+const SECURE_PORT = normalizePort(process.env.SECURE_PORT || 9443);
+app.set('securePort', SECURE_PORT);
 
-// *** START SERVER ***
-server.on('error', onError);
-server.on('listening', onListening);
+
+// create http server.
+const { HTTP } = require('./server/servers')(app);
+let port = PORT;
+// create https server.
+const { HTTPS } = require('./server/servers')(app);
+
+// creates the secured websocket server.
+const server = require('./server/socket-server')(HTTPS);
+let availablePort = SECURE_PORT;
+
+// *** START SERVERS ***
+// starts http server on port PORT
+server.on('error', onError(server, port));
+HTTP.on('listening', onListening(HTTP));
+startServer(HTTP, port);
+
+server.on('error', onError(server, availablePort));
+server.on('listening', onListening(server));
+// starts secured websocket server on port available.
 startServer(server, availablePort);
 // ********************
 
@@ -81,7 +96,7 @@ function normalizePort(val) {
 /**
  * Listen on provided port, on all network interfaces.
  */
-function startServer(server, serverPort) {
+function startServer(server,serverPort) {
   server.listen(serverPort);
 }
 
@@ -90,41 +105,47 @@ function startServer(server, serverPort) {
  * Event listener for HTTP server "error" event.
  */
 function onError(error) {
-  if (error.syscall !== 'listen') {
-    throw error;
-  }
-  const bind = `${
-    typeof port === 'string' ? 'Pipe' : 'Port'
-  } ${port}`;
-  // handle specific listen errors with friendly messages
-  switch (error.code) {
-    case 'EACCES':
-      log(`${bind} requires elevated privileges`);
-      process.exit(1);
-      break;
-    case 'EADDRINUSE':
-      if (availablePort - port < 10) {
-        availablePort += 1;
-        startServer(availablePort);
-      } else {
-        log(`${bind} is already in use`);
-        process.exit(1);
-      }
-      break;
-    default:
+  return function (server, serverPort) {
+    if (error.syscall !== 'listen') {
       throw error;
+    }
+    const bind = `${
+      typeof port === 'string' ? 'Pipe' : 'Port'
+    } ${port}`;
+    // handle specific listen errors with friendly messages
+    switch (error.code) {
+      case 'EACCES':
+        log(`${bind} requires elevated privileges`);
+        process.exit(1);
+        break;
+      case 'EADDRINUSE':
+        if (serverPort - port < 10) {
+          serverPort += 1;
+          startServer(server, serverPort);
+        } else {
+          log(`${bind} is already in use`);
+          process.exit(1);
+        }
+        break;
+      default:
+        throw error;
+    }
   }
 }
 /**
- * Event listener for HTTP server "listening" event.
+ * Event listener for HTTP server "listening" event.œ
  */
-function onListening() {
-  const addr = server.address();
-  const bind = `${
-    typeof addr === 'string' ? 'pipe' : 'port'
-  } ${
-    typeof addr === 'string' ? addr : addr.port
-  }`;
-  log(`Server is listening on ${bind}`);
-  log(`Visit: http://localhost:${addr.port}`);
+function onListening (server) {
+  return () =>  {
+    const addr = server.address();
+    const bind = `${
+      typeof addr === 'string' ? 'pipe' : 'port'
+    } ${
+      typeof addr === 'string' ? addr : addr.port
+    }`;
+    log(`Server is listening on ${bind}`);
+    log(`Visit: ${
+      server.requestCert !== undefined ? 'https' : 'http'
+    }://${ process.env.DOMAIN || 'localhost' }:${addr.port}`);
+  }
 }
