@@ -3,7 +3,7 @@ const { generateAccessToken } = require('../services/token');
 
 const generateUserToken = (req, res) => {
   const accessToken = generateAccessToken(req.user.id);
-  res.send({ access_token: accessToken });
+  res.status(200).send({ access_token: accessToken });
 }
 
 module.exports = app => {

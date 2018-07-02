@@ -1,0 +1,9 @@
+Yo, ce petit fichier sert à référencer les problèmes qu'on rencontre pour que l'autre puisse travailler en priorité dessus.
+
+par exemple :
+
+date --> 02/07/2018
+probleme --> impossible d'accéder aux webservices à l'adresse https://localhost:5000/api/users
+message --> [copie de la stack trace, ou du message d'erreur]
+infos supplémentaires --> ici tu mets le détail de ce que tu as fait ou ce que tu penses être l'origine du pb, ou toute info que tu jugeras pertinente.
+
