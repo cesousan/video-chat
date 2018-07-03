@@ -12,5 +12,12 @@
   },
   "devDependencies": {
     "concurrently": "^3.5.1"
+  },
+  "dependencies": {
+    "@angular/animations": "^6.0.6",
+    "@angular/cdk": "^6.3.1",
+    "@angular/material": "^6.3.1",
+    "rxjs": "^6.2.1",
+    "yarn": "^1.7.0"
   }
 }
