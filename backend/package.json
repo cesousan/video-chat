@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "node dist/main.js",
-    "clean": "rm -rf dist",
+    "clean": "rimraf dist",
     "dev": "yarn run clean && yarn run webpack-dev",
     "webpack-dev": "webpack --mode development --watch",
     "webpack-prod": "webpack --mode production"

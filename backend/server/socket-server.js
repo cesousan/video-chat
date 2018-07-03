@@ -16,7 +16,7 @@ module.exports = server => {
 
     // TESTING PURPOSES ONLY !!!
     // TODO: comment the line below or refresh the token manually after authenticating
-    headers.authorization = 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MzA1MjQwMzYsImV4cCI6MTUzMDUyNzYzNiwic3ViIjoiNWIyYjc4NjI3ZTYxOGMyYTUxYTBkZWViIn0.J5cEykInuUo7E1yWkxG12qOxstn2VNXcBUhfabU3eIs';
+    headers.authorization = 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MzA1Mzk0MTcsImV4cCI6MTUzMDU0MzAxNywic3ViIjoiNWIyYjZkMzRmNmY4OTUxNWVjODFlMWI2In0.5DDmOR6DCLdut7ZdDMUNFiiHm-Ty1x2-EiqIXKxY5O8';
     // *********************** //
 
     if(!headers.authorization) {
