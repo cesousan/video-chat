@@ -5,6 +5,8 @@ const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const logger = require('morgan');
+const cors = require('cors');
+
 // use dotenv
 dotenv.config();
 
@@ -12,9 +14,10 @@ dotenv.config();
 require('./server/models/User');
 
 const token = require('./server/services/token');
-const cors = require('./server/middleware/cors');
-const ensureSecure = require('./server/middleware/ensureSecure');
+// const cors = require('./server/middleware/cors');
+// const ensureSecure = require('./server/middleware/ensureSecure');
 const keys = require('./server/config/keys');
+const allowedOrigins = keys.allowedClientOrigins;
 
 // custom services.
 require('./server/services/passport');
@@ -33,10 +36,25 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(logger('combined'));
 app.use(passport.initialize());
-app.use(cors);
+app.use(cors({
+  origin: function(origin, callback){
+    // allow requests with no origin
+    // (like mobile apps or curl requests)
+    if(!origin) {
+      return callback(null, true);
+    }
+    if(allowedOrigins.indexOf(origin) === -1){
+      const msg = `
+        The CORS policy for this site does not allow access from the specified Origin.
+        `;
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  }
+}));
 
 // redirecting calls from HTTP to HTTPS
-app.use(ensureSecure);
+// app.use(ensureSecure);
 
 // get ports from env and store it in Express.
 const PORT = normalizePort(process.env.PORT || 9000);
@@ -149,4 +167,3 @@ function onListening (server) {
     }://${ process.env.DOMAIN || 'localhost' }:${addr.port}`);
   }
 }
-

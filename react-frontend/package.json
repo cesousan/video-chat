@@ -2,19 +2,10 @@
   "name": "react-frontend",
   "version": "0.1.0",
   "private": true,
-  "proxy": {
-    "/auth": {
-      "target": "http://localhost:5000",
-      "ws":true
-    },
-    "/api": {
-      "target": "http://localhost:5000",
-      "ws": true
-    }
-  },
   "dependencies": {
     "axios": "^0.18.0",
     "materialize-css": "^0.100.2",
+    "query-string": "^6.1.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-redux": "^5.0.7",

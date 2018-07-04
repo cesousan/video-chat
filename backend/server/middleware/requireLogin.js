@@ -9,7 +9,7 @@ module.exports = (req, res, next) => {
         return next(err);
       }
       if (!user) {
-        return res.json({
+        return res.status(403).json({
           status: 'error',
           error: 'UNAUTHORIZED_USER'
         });

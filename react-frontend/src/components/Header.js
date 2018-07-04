@@ -1,20 +1,33 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import queryString from 'query-string';
 
 class Header extends Component {
+
+  componentDidMount() {
+
+    // const search = location.search;
+    console.log(window.URLSearchParams);
+
+  }
+
   renderContent() {
-    console.log(this.props.auth)
+    // console.log(this.props);
     switch (this.props.auth) {
       // case null:
         // return;
       case null:
       case false:
-      case {status: "error", error: "ANOTHORIZED_USER"} :
         return (
-          <li>
-            <a href={'/auth/google'}>Login With Google</a>
-          </li>
+          <ul className="right">
+            <li>
+              <a href={'http://localhost:5000/auth/google'}>Login With Google</a>
+            </li>
+            <li>
+              <a href={'http://localhost:5000/auth/facebook'}>Login With Facebook</a>
+            </li>
+          </ul>
         );
       default:
         return [
@@ -39,7 +52,7 @@ class Header extends Component {
           >
             Vidzter
           </Link>
-          <ul className="right">{this.renderContent()}</ul>
+          {this.renderContent()}
         </div>
       </nav>
     );

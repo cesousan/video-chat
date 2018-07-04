@@ -3,7 +3,10 @@ const { generateAccessToken } = require('../services/token');
 
 const generateUserToken = (req, res) => {
   const accessToken = generateAccessToken(req.user.id);
-  res.status(200).send({ access_token: accessToken });
+  res
+    // .status(200)
+    // .query('access_token', accessToken)
+    .redirect(`${(req.headers.referer).slice()}?access_token=${accessToken}`);
 }
 
 module.exports = app => {
@@ -18,7 +21,7 @@ module.exports = app => {
   );
   // get the callback from google.
   app.get('/auth/google/callback',
-      passport.authenticate('google', { session: false }),
+    passport.authenticate('google', { session: false }),
       generateUserToken
     );
   // ********************

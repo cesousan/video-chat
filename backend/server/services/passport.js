@@ -14,7 +14,7 @@ if (keys.googleClientID) {
       clientID: keys.googleClientID,
       clientSecret: keys.googleClientSecret,
       callbackURL: '/auth/google/callback',
-      proxy: true
+      // proxy: true
     },
     async (accessToken, refreshToken, profile, done) => {
       const existingUser = await _getBySocialID(profile);
@@ -43,10 +43,11 @@ if (keys.facebookClientID) {
       clientSecret: keys.facebookClientSecret,
       callbackURL: '/auth/facebook/callback',
       profileFields: ['id', 'displayName', 'email', 'birthday', 'friends', 'gender'],
-      proxy: true
+      // proxy: true
     },
     async (accessToken, refreshToken, profile, done) => {
       const existingUser = await _getBySocialID(profile);
+      console.log(accessToken, refreshToken, profile, done);
       if (existingUser) {
         done(null, existingUser);
       } else {
