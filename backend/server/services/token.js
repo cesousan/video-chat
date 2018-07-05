@@ -14,9 +14,6 @@ const generateAccessToken = (userID, expiresIn = 3600) => {
 
 const verifyAccessToken = (bearerToken) => {
   // split token and get encoded part
-
-  // console.log(bearerToken, done);
-
   if(!bearerToken) return false;
   const token = bearerToken.startsWith('bearer ')
     ? bearerToken.split(' ')[1]
@@ -30,7 +27,6 @@ const verifyAccessToken = (bearerToken) => {
       const user = await User.findById(decoded.sub).cache({
         id: decoded.sub
       });
-      console.log(`about to return ${user}`);
       return user ? user : false;
     }
   });

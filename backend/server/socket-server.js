@@ -26,7 +26,6 @@ module.exports = server => {
     const verified = await verifyAccessToken(headers.authorization);
     // adding verified status / object to the request object.
     info.req.verified = verified;
-    console.log('verified :', info.req.verified);
 
 
     return verified
@@ -40,7 +39,6 @@ module.exports = server => {
   const wss = new WebSocket.Server({ server, pathChat, verifyClient });
 
   wss.on('connection', (ws, request) => {
-    console.log('about to launch websocket connection configuration');
     require('./services/ws/websocket')(ws, request);
   });
 

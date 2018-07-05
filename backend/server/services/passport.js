@@ -47,7 +47,6 @@ if (keys.facebookClientID) {
     },
     async (accessToken, refreshToken, profile, done) => {
       const existingUser = await _getBySocialID(profile);
-      console.log(accessToken, refreshToken, profile, done);
       if (existingUser) {
         done(null, existingUser);
       } else {
@@ -74,7 +73,6 @@ passport.use(
   },
   async (payload, done) => {
     const user = await User.findById(payload.sub);
-    // console.log(user);
     return user ? done(null, user, payload) : done();
   })
 );

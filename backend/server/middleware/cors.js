@@ -6,10 +6,10 @@ module.exports = (req, res, next) => {
   const options = {
     origin: function (origin, callback) {
       if (whitelist.indexOf(origin) !== -1) {
-        console.log(`origin ${origin} is accepted`);
+        // console.log(`origin ${origin} is accepted`);
         callback(null, true)
       } else {
-        console.log(`origin ${origin} is rejected`);
+        // console.log(`origin ${origin} is rejected`);
         callback(new Error('Not allowed by CORS'))
       }
     }

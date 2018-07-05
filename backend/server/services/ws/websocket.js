@@ -91,7 +91,6 @@ module.exports =  (ws, request) =>  {
   })
 
   ws.on('message', (message) => {
-    console.log(`received : ${message}`);
     let decoded = JSON.parse(message);
 
     if (decoded.type === p.MESSAGE_CHAT) {
@@ -148,10 +147,6 @@ module.exports =  (ws, request) =>  {
     if(decoded.data.nickname.length > 14) {
       return;
     }
-    console.log(users.filter(u => u.nickname == decoded.data.nickname).length
-      ? 'nickname already used'
-      : 'nickname not used yet'
-    );
     if(users.filter(u => u.nickname == decoded.data.nickname).length) {
       return;
     }
