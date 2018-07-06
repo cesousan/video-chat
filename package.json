@@ -7,6 +7,7 @@
   "author": "cesousan & juanito",
   "license": "MIT",
   "scripts": {
+    "install-all": "concurrently \"yarn\" \"cd ./backend && yarn\" \"cd ./ng-frontend && yarn\"",
     "dev": "concurrently \"cd ./backend && yarn run dev\" \"cd ./ng-frontend && yarn run start\"",
     "dev-react": "concurrently \"cd ./backend && yarn run dev\" \"cd ./react-frontend && yarn run start\""
   },

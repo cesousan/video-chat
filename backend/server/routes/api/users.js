@@ -17,6 +17,7 @@ users.get('/info', async (req, res, next) => {
   const token = req.headers.authorization;
   if(token) {
     const verified = await verifyAccessToken(token);
+    console.log(verified);
     verified
       ? res.status(200).send({status: 'data', user: verified})
       : res.status(401).send({status: 'error', message: 'Authentication failed'});

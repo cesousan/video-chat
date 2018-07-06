@@ -15,7 +15,7 @@ const generateAccessToken = (userID, expiresIn = 3600) => {
 const verifyAccessToken = (bearerToken) => {
   // split token and get encoded part
   if(!bearerToken) return false;
-  const token = bearerToken.startsWith('bearer ')
+  const token = bearerToken.startsWith('Bearer ')
     ? bearerToken.split(' ')[1]
     : null;
   if (!token) return false;
