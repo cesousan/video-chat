@@ -6,7 +6,6 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const logger = require('morgan');
 const cors = require('cors');
-
 // use dotenv
 dotenv.config();
 

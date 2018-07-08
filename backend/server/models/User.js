@@ -7,7 +7,9 @@ const userSchema = new Schema({
   facebookId: String,
   name: String,
   email: String,
-  avatar: String
+  avatar: String,
+  // the url from which the client is last logged in.
+  clientOrigin: String
 });
 
 mongoose.model('users', userSchema);

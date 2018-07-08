@@ -18,8 +18,8 @@ class App extends Component {
             <div>
               <Header />
               <Switch>
-                <Route path={`vidzter/chat`} component={Chat} />
-                <Route path={`$vidzter/`} component={Landing} />
+                <Route path={`/chat`} component={Chat} />
+                <Route path={`/`} component={Landing} />
               </Switch>
             </div>
           </BrowserRouter>
