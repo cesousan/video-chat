@@ -6,7 +6,7 @@ import * as actions from '../actions';
 // import { history } from '../helpers';
 import Header from './Header';
 import Landing from './Landing';
-import Chat from './Chat';
+import Chat from './chat/Chat';
 
 class App extends Component {
 

@@ -8,6 +8,7 @@ import {
   history
 } from '../helpers';
 
+import { config } from '../config';
 
 export const userService = {
   startLoginFlow,
@@ -15,7 +16,7 @@ export const userService = {
   getSelf
 };
 
-export const API_AUTH_ADDRESS = 'http://localhost:5000/auth';
+const API_AUTH_ADDRESS = `${config.API_SECURE}/auth`;
 
 function startLoginFlow(socialMediaProvider) {
     if (socialMediaProvider !== 'facebook' && socialMediaProvider !== 'google') {

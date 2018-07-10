@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { userActions } from '../actions';
-// import queryString from 'query-string';
 
 class Header extends Component {
 
@@ -40,12 +39,20 @@ class Header extends Component {
         );
       default:
         return [
-          <ul key="2" className="right">
+          <ul
+            key="2"
+            className="right">
             <li>
-              <button className="waves-effect waves-teal btn-flat">{`Hello, ${user.user.info.name}!`}</button>
+              <button className="waves-effect waves-teal btn-flat">
+                {`Hello, ${user.user.info.name}!`}
+              </button>
             </li>
             <li>
-              <button className="waves-effect waves-teal btn-flat" onClick={() => this.handleLogout()}>Logout</button>
+              <button
+                className="waves-effect waves-teal btn-flat"
+                onClick={() => this.handleLogout()}>
+                  Logout
+              </button>
             </li>
           </ul>
         ];
@@ -63,7 +70,7 @@ class Header extends Component {
       <nav className="indigo">
         <div className="nav-wrapper">
           <Link
-            to={loggedIn ? 'chat' : ''}
+            to={loggedIn ? '/chat' : '/'}
             className="left brand-logo"
             style={{ marginLeft: '10px' }}
           >
@@ -77,7 +84,7 @@ class Header extends Component {
 }
 
 function mapStateToProps(state) {
-  const { authentication} = state;
+  const { authentication } = state;
   const user = authentication;
   return {
     user

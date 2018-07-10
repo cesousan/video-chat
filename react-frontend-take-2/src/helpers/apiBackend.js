@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getToken } from './auth';
 
-const APIURL = 'http://localhost:5000/';
+const APIURL = 'https://localhost:8443/';
 
 export const customAxios = axios.create({
   baseURL: APIURL,
