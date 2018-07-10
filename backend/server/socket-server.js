@@ -11,30 +11,36 @@ module.exports = server => {
 
   const verifyClient = async (info, done) => {
 
+    // function to get the queryParam in url.
+    let _getParameterByName = (name, url) => {
+      if (!url) url = window.location.href;
+      name = name.replace(/[[\]]/g, "\\$&");
+      var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+          results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+    // check if origin is authorized.
     const headers = info.req.headers;
-    if(!keys.allowedClientOrigins.includes(headers.origin)) return done(false, 401, 'Unauthorized');
-
-    // TESTING PURPOSES ONLY !!!
-    // TODO: comment the line below or refresh the token manually after authenticating
-    headers.authorization = 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MzA1Mzk0MTcsImV4cCI6MTUzMDU0MzAxNywic3ViIjoiNWIyYjZkMzRmNmY4OTUxNWVjODFlMWI2In0.5DDmOR6DCLdut7ZdDMUNFiiHm-Ty1x2-EiqIXKxY5O8';
-    // *********************** //
-
-    if(!headers.authorization) {
+    if(!keys.allowedClientOrigins.includes(headers.origin)){
       return done(false, 401, 'Unauthorized');
     }
+    // extract token if present or reject.
+    const token = _getParameterByName('access_token', info.req.url);
+    if(!token) {
+      return done(false, 401, 'Unauthorized');
+    }
+    // verify access token is valid
     // returns a user or false
-    const verified = await verifyAccessToken(headers.authorization);
+    const verified = await verifyAccessToken(token, false);
     // adding verified status / object to the request object.
     info.req.verified = verified;
-
 
     return verified
       ? done(verified, 200)
       : done(false, 401, 'Invalid credentials');
   };
-
-  // server.on('request', app);
-
   // initialize the websocket server instance
   const wss = new WebSocket.Server({ server, pathChat, verifyClient });
 

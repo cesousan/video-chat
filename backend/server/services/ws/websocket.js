@@ -53,9 +53,9 @@ function sendUserList(ws) {
 }
 
 module.exports =  (ws, request) =>  {
-
+  // console.log(request);
   const user = request.verified;
-  console.log(`${user.name} is trying to connect.`);
+  // console.log(`${user.name} is trying to connect.`);
   if(!user) return;
 
   let me = {
@@ -91,10 +91,32 @@ module.exports =  (ws, request) =>  {
   })
 
   ws.on('message', (message) => {
-    let decoded = JSON.parse(message);
+
+    let decoded;
+    // structural checks
+    // 1 - valid JSON ?
+    try {
+      decoded = JSON.parse(message);
+    } catch(err) {
+      console.log(`${message} is not valid json`);
+      return;
+    }
+    // type is specified && valid according to protocol ?
+    if(!decoded.type || !p.hasOwnProperty(decoded.type)) {
+      console.log(`${message} has no type specified or type does not respect protocol`);
+      return;
+    }
+
+    if(decoded.data === undefined) {
+      console.log('no data sent.')
+      return;
+    }
 
     if (decoded.type === p.MESSAGE_CHAT) {
-      if(!(decoded.data.message.length && me.nickname)) return;
+      if(!(decoded.data.message
+          && decoded.data.message.length
+          && me.nickname))
+            return;
 
       broadcast(p.MESSAGE_CHAT, {
         message: decoded.data.message,

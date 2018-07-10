@@ -12,13 +12,20 @@ const generateAccessToken = (userID, expiresIn = 3600) => {
   return token;
 };
 
-const verifyAccessToken = (bearerToken) => {
+const verifyAccessToken = (bearerToken, isBearer = true) => {
   // split token and get encoded part
   if(!bearerToken) return false;
-  const token = bearerToken.startsWith('Bearer ')
-    ? bearerToken.split(' ')[1]
-    : null;
+  const token = !isBearer
+    // is not a bearer scheme.
+    ? bearerToken
+    // is bearer scheme.
+    : bearerToken.startsWith('Bearer ')
+      // extract the token part.
+      ? bearerToken.split(' ')[1]
+      // return null --> token malformed.
+      : null;
   if (!token) return false;
+
 
   return jwt.verify(token, keys.tokenSecret, async (err, decoded) => {
     if (err) {

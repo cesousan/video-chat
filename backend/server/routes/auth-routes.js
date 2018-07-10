@@ -9,7 +9,7 @@ const generateUserToken = async (req, res) => {
       ? req.headers.referer
       : false;
   if (!origin) {
-    res.send('the authentication failed, please retry.');
+    res.send(`access_token : ${accessToken}`);
   }
 
   res.redirect(`${origin}/?access_token=${accessToken}`);
