@@ -10,4 +10,9 @@ module.exports = {
   tokenSecret: 'mySuperSecretTokenKey',
   mongoURI: `mongodb://${dbUser}:${dbPwd}@ds263640.mlab.com:63640/video_chat-dev`,
   redisUrl: 'redis://127.0.0.1:6379',
+  allowedClientOrigins: [
+    'http://localhost:4200',
+    'http://localhost:3000',
+    'chrome-extension://omalebghpgejjiaoknljcfmglgbpocdp'
+  ]
 }

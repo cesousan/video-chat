@@ -1,0 +1,14 @@
+{
+  "type": "MESSAGE_REQUEST_NICKNAME",
+  "data": {
+    "nickname": "cesousan"
+  }
+}
+
+
+{
+  "type": "MESSAGE_CHAT",
+  "data": {
+    "message": "hello there!"
+  }
+}

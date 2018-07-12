@@ -7,9 +7,12 @@
   "author": "cesousan & juanito",
   "license": "MIT",
   "scripts": {
-    "dev": "concurrently \"cd ./backend && yarn run dev\" \"cd ./ng-frontend && yarn run start\""
+    "install-all": "concurrently \"yarn\" \"cd ./backend && yarn\" \"cd ./ng-frontend && yarn\"",
+    "dev": "concurrently \"cd ./backend && yarn run dev\" \"cd ./ng-frontend && yarn run start\"",
+    "dev-react": "concurrently \"cd ./backend && yarn run dev\" \"cd ./react-frontend-take-2 && yarn run start\""
   },
   "devDependencies": {
     "concurrently": "^3.5.1"
-  }
+  },
+  "dependencies": {}
 }
