@@ -49,6 +49,7 @@ async function getSelf() {
     // sets user info in local storage.
     setUserInfo(userInfo);
   } catch (error) {
+    logout();
     console.log('cannot get user info.', error);
   }
   user = getUser();

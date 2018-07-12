@@ -44,6 +44,7 @@ function identifySelf() {
   };
   let failureUserInfo = (error) => {
     console.log(`an error occured while self authenticating of the user : ${error}`);
+    userService.logout();
     return { type: userConstants.GET_SELF_FAILURE };
   };
   return async dispatch => {

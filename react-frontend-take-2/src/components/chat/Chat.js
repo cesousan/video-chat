@@ -20,7 +20,7 @@ class Chat extends Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(chatActions.joinRoom());
+    this.props.dispatch(chatActions.connect());
   };
 
   render(){
