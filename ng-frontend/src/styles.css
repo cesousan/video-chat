@@ -1,3 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
 /*@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';*/
 .icon-signin{font-size: 100px;}
+.container-chat{background-color: #0F1012;height:-webkit-fill-available}
+.button-send{background-color:#168F5D;color:white;border: none;cursor: pointer;}
+.button-send:hover{background-color:#2A5C47;}
+.container-user{height: 415px;background-color: white;margin-top: 3rem;}
+.container-text{height: 400px;padding-top: 3rem;padding-bottom: 1.5rem;}
+textarea {resize: none;}
+.title-col-user{padding: 0.3rem;background-color: #168F5D;color: white;width: 100%;}
+.form-control:focus{
+    border-color: #cccccc;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}

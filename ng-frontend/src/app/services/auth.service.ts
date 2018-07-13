@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
-import { app } from '../../../../backend/server/routes/auth-routes';
-
 
 
 @Injectable({
@@ -13,17 +10,26 @@ export class AuthService {
 
   constructor( private http : HttpClient) { }
 
-	private SignIn = 'http://localhost:5000/auth/facebook';  // URL to web api
+    private getUserUrl = 'http://localhost:5000/api/users/info'; 
 
+    
+    getUser (): Observable<any[]> {
+	  	return this.http.get<any[]>(this.getUserUrl); 	
+    }
+    
 
-    signInFacebook (): Observable<any[]> {
-	  	return this.http.get<any[]>(this.SignIn)
-	    	
-	}
+    getToken(){
+      if(localStorage.getItem('token')){
+        return true;
+      }
+    }
 
-	
+    getTokenStorage(){
+      return localStorage.getItem('token');
+      
+    }
 
-  signInGoogle(){
-  	console.log("Connecté par Google");
-  }
+    getName(){
+       return localStorage.getItem('name');
+    }
 }

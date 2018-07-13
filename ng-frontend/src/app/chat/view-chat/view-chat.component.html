@@ -1,3 +1,23 @@
-<p>
-  view-chat works!
-</p>
+<div class="container-fluid container-chat">
+  <div class="row">
+    <div class="container col-sm-8">
+      <div class="input-group col-sm-12 container-text">
+        <textarea class="form-control" aria-label="With textarea">{{messageOut}}</textarea>
+      </div>
+      <div class="container col-sm-12">
+        <form [formGroup]="chatForm" (ngSubmit)="onSubmitForm()">
+          <div class="form-group input-group">
+            <textarea class="form-control" aria-label="With textarea" formControlName="messageOut" (keyup.enter)="onSubmitForm()"></textarea>
+            <div class="input-group-prepend">
+              <button class="input-group-text button-send" type="submit" >Envoyer</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="container col-sm-4">
+      <div class="container-user">
+        <p class="title-col-user">Conversations</p>
+    </div>
+  </div>
+</div>
