@@ -10,13 +10,14 @@ export class AuthService {
 
   constructor( private http : HttpClient) { }
 
-    private getUserUrl = 'http://localhost:5000/api/users/info'; 
+    private getUserUrl = 'http://localhost:5000/api/users/info';
 
-    
-    getUser (): Observable<any[]> {
-	  	return this.http.get<any[]>(this.getUserUrl); 	
+    private getUserSecureUrl = 'https://localhost:8443/api/users/info';
+
+    getUser(): Observable<any[]> {
+	  	return this.http.get<any[]>(this.getUserUrl);
     }
-    
+
 
     getToken(){
       if(localStorage.getItem('token')){
@@ -26,7 +27,7 @@ export class AuthService {
 
     getTokenStorage(){
       return localStorage.getItem('token');
-      
+
     }
 
     getName(){

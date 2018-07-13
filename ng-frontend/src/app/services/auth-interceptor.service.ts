@@ -3,7 +3,7 @@ import { HttpInterceptor, HttpEvent, HttpHandler, HttpRequest } from "@angular/c
 import { Observable, of } from 'rxjs';
 import { AuthService } from'./auth.service';
 import { Router } from '@angular/router';
- 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -16,7 +16,7 @@ export class AuthInterceptorService implements HttpInterceptor{
     if(if_token){
       let token = req.clone({
         setHeaders: {
-          Authorization : `Bearer ` + if_token
+          Authorization : `Bearer ${if_token}`
         }
       })
       return next.handle(token);
