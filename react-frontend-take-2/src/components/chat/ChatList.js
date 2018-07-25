@@ -5,14 +5,14 @@ export const ChatList = ({ chats }) => (
       <ul>
         {chats.map(chat => {
           return (
-            <div>
+            <div key={chat.id}>
               <div className="row show-grid">
                 <div className="col-xs-12">
 
                   <div className="chatMessage">
-                    <div key={chat.id} className="box">
+                    <div className="box">
                       <p>
-                        <strong>{chat.username}</strong>
+                        <strong>{chat.from}</strong>
                       </p>
                       <p>{chat.message}</p>
                     </div>

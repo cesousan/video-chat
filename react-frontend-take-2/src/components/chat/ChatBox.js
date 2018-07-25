@@ -12,14 +12,14 @@ export const ChatBox = ({ text, username, handleTextChange }) => (
             // value={text}
             placeholder="chat here..."
             className="form-control"
-            // onChange={handleTextChange}
-            // onKeyDown={handleTextChange}
+            onChange={handleTextChange}
+            onKeyDown={handleTextChange}
           />
         </div>
         <div className="clearfix"></div>
       </div>
     </div>
-    {/* <h4 className="greetings">Hello, {username}</h4> */}
+    <h4 className="greetings">Hello, {username}</h4>
   </div>
 </div>
 );

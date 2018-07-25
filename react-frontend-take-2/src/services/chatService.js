@@ -2,14 +2,13 @@ import { config } from '../config';
 import { chatActions } from '../actions';
 
 import {
-  // getToken,
   getUser,
-  // CustomWebSocket,
-  // chatProtocolActions as cpa
 } from '../helpers';
+
 import {
   protocol as p
 } from '../constants';
+
 export const chatService = {
   connect
 };
@@ -26,26 +25,34 @@ function connect(dispatch) {
    let socket = new WebSocket(`${WSS_ENDPOINT}?access_token=${userToken}`);
 
    socket.onopen = () => {
-     socket.send(JSON.stringify({
-       type: 'MESSAGE_USER_JOINS',
-       name: user.info.name
-     }));
+     // socket.send(JSON.stringify({
+     //   type: 'MESSAGE_USER_JOINS',
+     //   name: user.info.name
+     // }));
    };
 
    socket.onmessage = (event) => {
      const data = JSON.parse(event.data);
      const type = data.type;
      const payload = data.data;
+
      switch(type) {
-       case p.MESSAGE_USER_JOINS : {
-         dispatch(chatActions.addUser(payload));
-         break;
-       };
-       case p.MESSAGE_USER_LIST : {
-         dispatch(chatActions.listUsers(payload));
-         break;
-       };
-       default:
+      case p.MESSAGE_USER_JOINS :
+        dispatch(chatActions.addUser(payload));
+        break;
+      case p.MESSAGE_USER_LIST :
+        dispatch(chatActions.listUsers(payload));
+        break;
+      case p.MESSAGE_WHO_ARE_YOU :
+        dispatch(chatActions.welcomeUser());
+        break;
+      case p.MESSAGE_SERVER_MESSAGE :
+        dispatch(chatActions.processServerMessage(payload));
+        break;
+      case p.MESSAGE_CHAT :
+        dispatch(chatActions.processServerMessage(payload));
+        break;
+      default:
         break;
      }
    };
