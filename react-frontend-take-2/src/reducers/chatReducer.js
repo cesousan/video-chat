@@ -26,7 +26,7 @@ export const chat = (state = {}, action) => {
     case chatConstants.RECEIVE_MESSAGE :
       console.log('A MESSAGE IS BEEING RECEIVED FROM SERVER');
       return {
-        state,
+        ...state,
         receivingMsg: true,
         msg: action.message
       };
@@ -34,7 +34,10 @@ export const chat = (state = {}, action) => {
       console.log('A VALID MESSAGE HAS BEEN RECEIVED FROM SERVER');
       return {
         msg: action.message,
-        chats: [...state].concat(action.message)
+        chats: {
+          ...state.chats,
+
+        }
       };
     case chatConstants.RECEIVE_MESSAGE_FAILURE :
       console.log('THE MESSAGE FROM SERVER WAS INVALID AND HAS BEEN IGNORED');
